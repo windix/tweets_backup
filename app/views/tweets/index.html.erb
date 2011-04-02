@@ -1,0 +1,12 @@
+<% last_post_date = nil %>
+<% @tweets.each do |tweet| %>
+    <div class="msg">
+      <div class="datetime">
+        <p class="date"><%= (tweet.post_date == last_post_date) ? '' : tweet.post_date %></p>
+        <p class="time"><%= tweet.post_time %></p>
+      </div>
+      <div class="srcTag">&nbsp;</div>
+      <div class="content"><%= tweet.text.html_safe %></div>
+    </div>
+    <% last_post_date = tweet.post_date %>
+<% end %>

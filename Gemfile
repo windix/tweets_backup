@@ -31,3 +31,7 @@ gem 'sqlite3'
 # end
 
 gem 'jquery-rails'
+
+group :development do
+  gem 'irbtools'
+end
