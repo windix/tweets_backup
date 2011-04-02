@@ -1,4 +1,6 @@
 TweetsRails::Application.routes.draw do
+  get "favorites/index"
+
   get "tweets/index"
 
   # The priority is based upon order of creation:
