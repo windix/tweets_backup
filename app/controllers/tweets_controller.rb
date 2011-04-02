@@ -1,6 +1,9 @@
 class TweetsController < ApplicationController
   def index
-    @tweets = Tweet.where(:type => 'tweet').order('created_at ASC').paginate(:page => params[:page], :per_page => 20)
-  end
+    Tweet.set_type('tweet')
+    @tweets = Tweet.get_tweets
+    last_page_number = Tweet.last_page_number(@tweets)
 
+    @tweets = @tweets.paginate(:page => params[:page] || last_page_number, :per_page => Tweet.per_page).reverse
+  end
 end
