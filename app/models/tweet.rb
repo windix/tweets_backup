@@ -9,6 +9,10 @@ class Tweet < ActiveRecord::Base
     created_at.strftime('%H:%M')
   end
 
+  def twitter_perm_url
+    "https://twitter.com/#!/#{user_screen_name}/status/#{external_id}"
+  end
+
   def self.set_type(type)
     @type = type
   end

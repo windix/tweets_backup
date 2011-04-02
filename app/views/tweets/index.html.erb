@@ -5,10 +5,10 @@
     <div class="msg">
       <div class="datetime">
         <p class="date"><%= (tweet.post_date == last_post_date) ? '' : tweet.post_date %></p>
-        <p class="time"><%= tweet.post_time %></p>
+        <p class="time"><%= link_to tweet.post_time, tweet.twitter_perm_url %></p>
       </div>
       <div class="srcTag">&nbsp;</div>
-      <div class="content"><%= tweet.text.html_safe %></div>
+      <div class="content"><%= auto_link tweet.text.html_safe %></div>
     </div>
     <% last_post_date = tweet.post_date %>
 <% end %>
