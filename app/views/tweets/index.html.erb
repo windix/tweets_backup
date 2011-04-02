@@ -1,3 +1,12 @@
+<div class="category">
+    <ul>
+      <li class="hr"><a href="/category.php?category_id=7">代码<span>My Tweets</span></a></li>
+      <li class="hr"><a class="select" href="/tweets.php">说<span>Favorites</span></a></li>
+    </ul>
+</div>
+
+<%= will_paginate @tweets %>
+
 <% last_post_date = nil %>
 <% @tweets.each do |tweet| %>
     <div class="msg">
@@ -10,3 +19,7 @@
     </div>
     <% last_post_date = tweet.post_date %>
 <% end %>
+
+<p class='pageNumber'>
+  <%= will_paginate @tweets %>
+</p>

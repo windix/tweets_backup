@@ -103,6 +103,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.25)
     unicode-display_width (0.1.1)
+    will_paginate (3.0.pre2)
     wirb (0.2.4)
     zucker (9)
 
@@ -114,3 +115,4 @@ DEPENDENCIES
   jquery-rails
   rails (= 3.0.5)
   sqlite3
+  will_paginate (~> 3.0.pre2)

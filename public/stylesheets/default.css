@@ -279,41 +279,49 @@ body > div.header > div > div {
 	text-align: right;
 	font-size: 1px;
 }
-p.pageNumber {
+
+div.pagination {
+	text-align: center;
 	clear: both;
 	height: 20px;
-	padding: 7px 0;
+	padding: 10px 0;
 }
 
-p.pageNumber, p.pageNumber * {
+div.pagination, div.pagination * {
 	font-size: 14px;
 	font-family: Verdana;
 }
-p.pageNumber a, p.pageNumber span.current {
+
+div.pagination em {
+  font-style: normal;
+  font-weight: bold;  
+	color: #fff;
+}
+
+div.pagination span.gap {
+	padding: 0 4px;
+	color: gray;
+}
+
+div.pagination em, div.pagination a, div.pagination span.gap {
 	padding: 5px 3px 1px;
 	margin: 0 4px;
 }
 
-p.pageNumber a:before, p.pageNumber span.current:before {
+/*
+div.pagination a:before, div.pagination span.current:before {
 	content: "[ ";
 }
 
-p.pageNumber a:after, p.pageNumber span.current:after {
+div.pagination a:after, div.pagination span.current:after {
 	content: " ]";
 }
+*/
 
-p.pageNumber, p.pageNumber span {
+div.pagination, div.pagination span {
 	cursor: default;
 }
 
-p.pageNumber span.current {
-	color: #fff;
-}
-
-p.pageNumber span.dot {
-	padding: 0 4px;
-	color: gray;
-}
 body.archive h1 {
 	padding-top: 10px;
 }
@@ -1097,7 +1105,3 @@ body.tweets div#opButton {
 	clear: both;
 }
 
-body.tweets p.pageNumber {
-	text-align: center;
-	padding: 10px;
-}
