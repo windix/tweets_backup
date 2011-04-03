@@ -12,8 +12,8 @@
       <div>
         <div class="navigation">
           <ul>
-            <li><a href="/tweets/index">My Tweets</a></li>
-            <li><a href="/favorites/index">Favorites</a></li>
+            <li><%= link_to "My Tweets", :controller => "tweets", :action => "index" %></li>
+            <li><%= link_to "Favorites", :controller => "favorites", :action => "index" %></li>
           </ul>
         </div>
       </div>
