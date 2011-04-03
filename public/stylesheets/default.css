@@ -279,9 +279,16 @@ body > div.header > div > div {
 }
 
 div.navigation {
+	font-size: 12px;
+	font-family: Verdana;
   padding: 5px 20px;
   height: 20px;
 }
+
+div.navigation .selected {
+  font-weight: bold;
+}
+
 
 div.navigation ul {
   list-style: none;

@@ -1,7 +1,11 @@
 TweetsRails::Application.routes.draw do
+  get "tweets/index"
   get "favorites/index"
 
-  get "tweets/index"
+  match "/tweets", :to => "tweets#index" 
+  match "/favorites", :to => "favorites#index"
+
+  match "/google", :to => redirect("http://www.google.com") 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -12,8 +12,14 @@
       <div>
         <div class="navigation">
           <ul>
-            <li><%= link_to "My Tweets", :controller => "tweets", :action => "index" %></li>
-            <li><%= link_to "Favorites", :controller => "favorites", :action => "index" %></li>
+            <li><%= link_to "My Tweets", 
+                    { :controller => "tweets", :action => "index" },
+                    :class => (controller_name == 'tweets') ? 'selected' : nil %>
+            </li>
+            <li><%= link_to "Favorites", 
+                    { :controller => "favorites", :action => "index" },
+                    :class => (controller_name == 'favorites') ? 'selected' : nil %>
+            </li>
           </ul>
         </div>
       </div>
