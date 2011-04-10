@@ -63,7 +63,6 @@ class Tweet < ActiveRecord::Base
             page_to_stop = page + 1
             stop = true
           end
-          #break
         end
       end
 
@@ -88,7 +87,7 @@ class Tweet < ActiveRecord::Base
   def self.backup_favorite
     client = self.get_client
     self.loop_through_tweets('favorite') do |page|
-      client.favorites :page => page
+      client.favorites page
     end
   end
 
