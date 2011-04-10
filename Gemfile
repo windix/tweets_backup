@@ -32,6 +32,8 @@ gem 'sqlite3'
 
 gem 'jquery-rails'
 
+gem 'twitter_oauth'
+
 gem 'will_paginate', "~> 3.0.pre2"
 
 group :development do

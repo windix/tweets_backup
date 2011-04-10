@@ -38,5 +38,9 @@ module TweetsRails
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    # Twitter config file 
+    # TODO: use Dir.join?
+    config.twitter_config_file = "#{Rails.root}/config/twitter.yml"
   end
 end
