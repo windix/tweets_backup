@@ -35,31 +35,47 @@ class Tweet < ActiveRecord::Base
   end
   
   def self.loop_through_tweets(type)
-    page = 1
+    page_to_stop = page = 1
     stop = false
 
     loop do
       puts "current page: #{page}"
 
-      tweets = yield page
+      tweets = begin 
+                 yield page
+               rescue => ex
+                 puts "Exception: #{ex.class} -> #{ex.message.split("\n").first}" 
+                 [] 
+               end
+
       break if tweets.empty?
 
       tweets.each do |t|
         if Tweet.where(:type => type, :external_id => t['id']).empty?
           self.save_tweet type, t
           puts "##{t['id']} saved!"
+          stop = false
         else
           # found this entry in db, which means we have reached the existing tweet
-          puts "No new tweet, quit"
-          stop = true
-          break
+          
+          # let's check one more page before stop
+          unless stop
+            page_to_stop = page + 1
+            stop = true
+          end
+          #break
         end
       end
 
-      break if stop
-
+      if stop
+        puts "No new tweet"
+        break if page == page_to_stop
+      end
+      
       page += 1
     end
+
+    puts "Quit..."
   end
   
   def self.backup_timeline
@@ -73,7 +89,7 @@ class Tweet < ActiveRecord::Base
     client = self.get_client
     self.loop_through_tweets('favorite') do |page|
       client.favorites :page => page
-    end    
+    end
   end
 
   def post_date
