@@ -37,6 +37,8 @@ GEM
     builder (2.1.2)
     clipboard (0.9.7)
     coderay (0.9.7)
+    deadweight (0.2.0)
+      nokogiri
     erubis (2.6.6)
       abstract (>= 1.0.0)
     fancy_irb (0.6.5)
@@ -74,6 +76,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    nokogiri (1.4.4)
     oauth (0.4.4)
     ori (0.1.0)
     polyglot (0.3.1)
@@ -117,6 +120,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  deadweight
   irbtools
   jquery-rails
   rails (= 3.0.6)

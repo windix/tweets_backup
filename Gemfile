@@ -38,4 +38,5 @@ gem 'will_paginate', "~> 3.0.pre2"
 
 group :development do
   gem 'irbtools'
+  gem 'deadweight'
 end
