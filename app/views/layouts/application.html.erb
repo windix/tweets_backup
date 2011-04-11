@@ -7,35 +7,25 @@
   <%= csrf_meta_tag %>
 </head>
 <body class="tweets">
-  <div class="header highlight">
-    <div>
-      <div>
-        <div class="navigation">
-          <ul>
-            <li><%= link_to "My Tweets", 
-                    { :controller => "tweets", :action => "index" },
-                    :class => (controller_name == 'tweets') ? 'selected' : nil %>
-            </li>
-            <li><%= link_to "Favorites", 
-                    { :controller => "favorites", :action => "index" },
-                    :class => (controller_name == 'favorites') ? 'selected' : nil %>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="outBox">
+    <div class="menu">
+      <a class='header' href='#'>&nbsp;</a>
+      <ul>
+        <li><%= link_to({ :controller => "tweets", :action => "index" }, 
+              :class => (controller_name == 'tweets') ? 'selected' : nil) do %>
+              我的推<span>My Tweets</span>
+            <% end %>
+        </li>
+        <li><%= link_to ({ :controller => "favorites", :action => "index" },
+              :class => (controller_name == 'favorites') ? 'selected' : nil) do %>
+              收藏的推<span>Favorites</span>
+            <% end %>
+        </li>
+      </ul>
+    </div>
 
 <%= yield %>
 
-  </div>
-  <div class="footer highlight">
-    <div>
-      <div>
-        <p>2001 - 2011 <a hidefocus="true" href="http://creativecommons.org/licenses/by/3.0/deed.zh" class="footer">Some Rights Reserved</a>, Template referenced from <a href="http://www.themelab.com/2008/04/01/colourise-free-wordpress-theme-38/">Colourise</a></p>
-      </div>
-    </div>
   </div>
 </body>
 </html>
