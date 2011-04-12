@@ -1,7 +1,13 @@
 class Tweet < ActiveRecord::Base
-  TWEETS_PER_PAGE = 200
+  TWEETS_PER_PAGE = 150
   
   self.inheritance_column = :not_in_use
+
+  TYPES = [:tweet, :mention, :favorite]
+  
+  TYPES_DEFINATION = { :tweet => ['My Tweets', '我的推'],
+                       :mention => ['Mentions', '提及我'],
+                       :favorite => ['Favorites', '我关注'] }
 
   def self.get_client
     unless @client
@@ -88,6 +94,13 @@ class Tweet < ActiveRecord::Base
     client = self.get_client
     self.loop_through_tweets('favorite') do |page|
       client.favorites page
+    end
+  end
+  
+  def self.backup_mention
+    client = self.get_client
+    self.loop_through_tweets('mention') do |page|
+      client.mentions :count => TWEETS_PER_PAGE, :page => page
     end
   end
 

@@ -1,9 +1,11 @@
 TweetsRails::Application.routes.draw do
   get "tweets/index"
   get "favorites/index"
+  get "mentions/index"
 
   match "/tweets", :to => "tweets#index" 
   match "/favorites", :to => "favorites#index"
+  match "/mentions", :to => "mentions#index"
 
   match "/google", :to => redirect("http://www.google.com") 
 
