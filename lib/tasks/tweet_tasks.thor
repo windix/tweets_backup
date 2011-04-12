@@ -65,6 +65,13 @@ class TweetTasks < Thor
   def backup_mention
     Tweet.backup_mention
   end
+
+  desc 'backup', 'backup all'
+  def backup
+    backup_timeline
+    backup_mention
+    backup_favorite
+  end
   
   desc 'stats', 'show statistics'
   def stats
