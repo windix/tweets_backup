@@ -8,7 +8,7 @@
         <p class="time"><%= link_to tweet.post_time, tweet.twitter_perm_url %></p>
       </div>
       <div class="srcTag">&nbsp;</div>
-      <div class="content"><%= auto_link tweet.text.html_safe %></div>
+      <div class="content"><%= auto_link tweet.text %></div>
     </div>
     <% last_post_date = tweet.post_date %>
 <% end %>

@@ -91,6 +91,14 @@ class Tweet < ActiveRecord::Base
     end
   end
 
+  #### FOR UI ####
+  
+  def text
+    # TODO: auto link
+    # add space in front of http:// link if not
+    self[:text].sub(/[^\s](http:\/\/)/, ' \1').html_safe
+  end
+
   def post_date
     posted_at.strftime('%Y-%m-%d')
   end

@@ -10,7 +10,7 @@
       <div class="srcTag">&nbsp;</div>
       <div class="content">
         <span class="from"><%= tweet.user_name.html_safe %></span><br />
-        <%= auto_link tweet.text.html_safe %>
+        <%= auto_link tweet.text %>
       </div>
     </div>
     <% last_post_date = tweet.post_date %>
