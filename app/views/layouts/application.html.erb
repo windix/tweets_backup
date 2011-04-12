@@ -11,15 +11,13 @@
     <div class="menu">
       <a class='header' href='#'>&nbsp;</a>
       <ul>
-        <li><%= link_to({ :controller => "tweets", :action => "index" }, 
-              :class => (controller_name == 'tweets') ? 'selected' : nil) do %>
-              我的推<span>My Tweets</span>
-            <% end %>
+        <li><%= link_to raw('我的推<span>My Tweets</span>'), 
+              { :controller => "tweets", :action => "index" }, 
+              :class => (controller_name == 'tweets') ? 'selected' : nil %>
         </li>
-        <li><%= link_to ({ :controller => "favorites", :action => "index" },
-              :class => (controller_name == 'favorites') ? 'selected' : nil) do %>
-              收藏的推<span>Favorites</span>
-            <% end %>
+        <li><%= link_to raw('收藏的推<span>Favorites</span>'), 
+              { :controller => "favorites", :action => "index" },
+              :class => (controller_name == 'favorites') ? 'selected' : nil %>
         </li>
       </ul>
     </div>
