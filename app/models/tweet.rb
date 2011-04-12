@@ -131,6 +131,10 @@ class Tweet < ActiveRecord::Base
   def self.get_tweets
     where(:type => @type).order('posted_at ASC')   
   end
+  
+  def self.get_count(type = nil)
+    where(:type => type || @type).count
+  end
 
   def self.per_page
     20
