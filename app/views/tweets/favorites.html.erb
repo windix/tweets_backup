@@ -1,7 +1,7 @@
 <%= paginate @tweets %>
 
 <% last_post_date = nil %>
-<% @tweets.each do |tweet| %>
+<% @tweets.reverse.each do |tweet| %>
     <div class="msg">
       <div class="datetime">
         <p class="date"><%= (tweet.post_date == last_post_date) ? '' : tweet.post_date %></p>
