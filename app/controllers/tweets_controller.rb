@@ -9,6 +9,7 @@ class TweetsController < ApplicationController
   
   def mentions
     get_tweets(:mention)
+    render :action => "favorites"
   end
   
   private
