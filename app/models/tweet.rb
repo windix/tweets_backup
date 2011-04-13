@@ -144,4 +144,11 @@ class Tweet < ActiveRecord::Base
     total = collections.count
     [((total - 1) / per_page) + 1, 1].max
   end
+
+  #### EXTENED PROPERTY ####
+  
+  # extract raw json into data
+  def data
+    @data ||= JSON.parse(self['raw']) 
+  end
 end
