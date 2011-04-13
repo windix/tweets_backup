@@ -1,4 +1,4 @@
-<%= will_paginate @tweets %>
+<%= paginate @tweets %>
 
 <% last_post_date = nil %>
 <% @tweets.each do |tweet| %>
@@ -16,4 +16,4 @@
     <% last_post_date = tweet.post_date %>
 <% end %>
 
-<%= will_paginate @tweets %>
+<%= paginate @tweets %>

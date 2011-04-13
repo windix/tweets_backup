@@ -224,30 +224,30 @@ body > div.header > div > div {
 	font-size: 16px;
 }
 
-div.pagination {
+nav.pagination {
 	text-align: center;
 	clear: both;
 	height: 20px;
 	padding: 10px 0;
 }
 
-div.pagination, div.pagination * {
+nav.pagination, nav.pagination * {
 	font-size: 14px;
 	font-family: Verdana;
 }
 
-div.pagination em {
+nav.pagination em {
   font-style: normal;
   font-weight: bold;  
 	color: #fff;
 }
 
-div.pagination span.gap {
+nav.pagination span.gap {
 	padding: 0 4px;
 	color: gray;
 }
 
-div.pagination em, div.pagination a, div.pagination span.gap {
+nav.pagination em, nav.pagination a, nav.pagination span.gap {
 	padding: 5px 3px 1px;
 	margin: 0 4px;
 }
@@ -262,7 +262,7 @@ div.pagination a:after, div.pagination span.current:after {
 }
 */
 
-div.pagination, div.pagination span {
+nav.pagination, nav.pagination span {
 	cursor: default;
 }
 

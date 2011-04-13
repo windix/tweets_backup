@@ -1,13 +1,9 @@
 TweetsRails::Application.routes.draw do
-  get "tweets/index"
-  get "favorites/index"
-  get "mentions/index"
+  get "tweets/tweets"
+  get "tweets/favorites"
+  get "tweets/mentions"
 
-  match "/tweets", :to => "tweets#index" 
-  match "/favorites", :to => "favorites#index"
-  match "/mentions", :to => "mentions#index"
-
-  match "/google", :to => redirect("http://www.google.com") 
+  match "/tweets", :to => "tweets#tweets" 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -58,7 +54,7 @@ TweetsRails::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "tweets#index"
+  root :to => "tweets#tweets"
 
   # See how all your routes lay out with "rake routes"
 

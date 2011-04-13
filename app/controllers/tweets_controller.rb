@@ -1,9 +1,23 @@
 class TweetsController < ApplicationController
-  def index
-    Tweet.set_type('tweet')
+  def tweets
+    get_tweets(:tweet)
+  end
+  
+  def favorites
+    get_tweets(:favorite)
+  end
+  
+  def mentions
+    get_tweets(:mention)
+  end
+  
+  private
+  def get_tweets(type)
+    Tweet.set_type(type)
     @tweets = Tweet.get_tweets
+  
     last_page_number = Tweet.last_page_number(@tweets)
 
-    @tweets = @tweets.paginate(:page => params[:page] || last_page_number, :per_page => Tweet.per_page).reverse
+    @tweets = @tweets.page(params[:page] || last_page_number).per(Tweet.per_page)  
   end
 end

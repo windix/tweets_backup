@@ -34,7 +34,7 @@ gem 'jquery-rails'
 
 gem 'twitter_oauth'
 
-gem 'will_paginate', "~> 3.0.pre2"
+gem 'kaminari'
 
 group :development do
   gem 'irbtools'
