@@ -1,0 +1,10 @@
+development: 
+  key: 5f618df494fb4dd08a1345f3f0d855ea
+  secret: 3d4770c05aa5e6caca14db938a16b748
+  url: http://localhost:3000
+  callback: http://localhost:3000/syncs/qq/callback
+production: 
+  key: 5f618df494fb4dd08a1345f3f0d855ea
+  secret: 3d4770c05aa5e6caca14db938a16b748
+  url: http://localhost:3000
+  callback: http://localhost:3000/syncs/qq/callback
