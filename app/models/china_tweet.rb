@@ -22,7 +22,7 @@ class ChinaTweet
     @client.authorize(:oauth_verifier => oauth_verifier)
     
     results = @client.dump
-    logger.debug "results: " + results.inspect
+    Rails.logger.debug "results: " + results.inspect
     
     if (results[:access_token] && results[:access_token_secret])
       save_oauth_config(results)
