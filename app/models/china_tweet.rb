@@ -31,12 +31,21 @@ class ChinaTweet
       false
     end
   end
-  
+
   def new_tweet(text)
     # if the new tweet is not reply to someone and not with '#nosync' hash, sync to this client
     @client.add_status(text) if text =~ /^@/ && !(text =~ /#nosync/)
   end
-  
+ 
+  def self.get_all_clients
+    Dir.glob("#{Rails.root}/config/oauth/*.yml").collect do |config_filename|
+      client_name = config_filename.scan(/(\w+).yml/).to_s
+      client_config = YAML.load_file(config_filename)[Rails.env]
+      authorized = client_config['access_token'] && client_config['access_secret']
+      { :name => client_name, :authorized => authorized }
+    end
+  end
+
   private
   
   def config_file_name

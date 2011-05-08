@@ -38,6 +38,16 @@ class Tweet < ActiveRecord::Base
       :text => t['text'],
       :raw => t.to_json
     )
+
+    # post new tweets to available china tweet clients
+    if (type == :tweet)
+      ChinaTweet.get_all_clients.each do |client|
+        if client[:authorized]
+          tweet_client = ChinaTweet.new(client[:name])
+          tweet_client.new_tweet(t['text'])
+        end
+      end
+    end
   end
   
   def self.loop_through_tweets(type)
