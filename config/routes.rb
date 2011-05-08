@@ -5,9 +5,10 @@ TweetsRails::Application.routes.draw do
 
   match "/tweets", :to => "tweets#tweets" 
 
-  match 'syncs/:type/new' => 'syncs#new', :as => :sync_new
-  match 'syncs/:type/callback' => 'syncs#callback', :as => :sync_callback
+  match 'syncs/:type/new' => 'syncs#new', :as => :syncs_new
+  match 'syncs/:type/callback' => 'syncs#callback', :as => :syncs_callback
   match 'syncs/:type/test' => 'syncs#test'
+  get "syncs/setup"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

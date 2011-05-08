@@ -1,0 +1,3 @@
+<% get_all_clients.each do |client| %>
+  <p><%= client[:name] %>: <%= client[:authorized] ? 'Authorized' : link_to('Send request', syncs_new_path(:type => client[:name])) %></p>
+<% end %>

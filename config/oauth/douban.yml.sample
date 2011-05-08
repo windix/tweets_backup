@@ -1,0 +1,10 @@
+development: 
+  key: 0a9d9607fa87385b1fd8c217ef95a911
+  secret: 4b4509900c7ea7cb
+  url: http://localhost:3000
+  callback: http://localhost:3000/syncs/douban/callback
+production: 
+  key: 0a9d9607fa87385b1fd8c217ef95a911
+  secret: 4b4509900c7ea7cb
+  url: http://localhost:3000
+  callback: http://localhost:3000/syncs/douban/callback
