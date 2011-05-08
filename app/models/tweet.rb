@@ -40,7 +40,7 @@ class Tweet < ActiveRecord::Base
     )
 
     # post new tweets to available china tweet clients
-    if (type == :tweet)
+    if (type == 'tweet')
       ChinaTweet.get_all_clients.each do |client|
         if client[:authorized]
           tweet_client = ChinaTweet.new(client[:name])

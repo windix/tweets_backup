@@ -34,7 +34,10 @@ class ChinaTweet
 
   def new_tweet(text)
     # if the new tweet is not reply to someone and not with '#nosync' hash, sync to this client
-    @client.add_status(text) if text =~ /^@/ && !(text =~ /#nosync/)
+    if text =~ /^@/ && !(text =~ /#nosync/)
+      @client.add_status(text)
+      Rails.logger.debug "New tweet to #{@client_name}: '#{text}'"
+    end
   end
  
   def self.get_all_clients
