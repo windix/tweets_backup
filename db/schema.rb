@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110410074019) do
+ActiveRecord::Schema.define(:version => 20111116110828) do
 
   create_table "tweets", :force => true do |t|
     t.string   "external_id",         :limit => 50
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20110410074019) do
     t.text     "raw"
     t.string   "type",                :limit => 50
     t.datetime "updated_at"
+    t.string   "subdomain"
   end
 
 end

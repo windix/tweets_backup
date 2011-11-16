@@ -1,6 +1,7 @@
 --- 
-api:
-  url: http://twitter-windix.apigee.com
-oauth: 
-  consumer_secret: FhaZBbWIJhm9WnIIvJYaJXvVWDDrQZlF2aHqYGiIq8M
-  consumer_key: 7BGofZ72tDUYWf7ikVcENQ
+general:
+  api:
+    url: http://twitter-windix.apigee.com
+  oauth: 
+    consumer_secret: FhaZBbWIJhm9WnIIvJYaJXvVWDDrQZlF2aHqYGiIq8M
+    consumer_key: 7BGofZ72tDUYWf7ikVcENQ

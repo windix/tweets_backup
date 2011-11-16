@@ -9,20 +9,37 @@ class Tweet < ActiveRecord::Base
                        :mention => ['Mentions', '提及我'],
                        :favorite => ['Favorites', '我关注'] }
 
+  def self.subdomain
+    @subdomain || 'windix'
+  end
+
+  def self.subdomain=(subdomain)
+    @subdomain = subdomain
+  end
+
+  def self.get_all_subdomains
+    YAML.load_file(TweetsRails::Application::config.twitter_config_file).keys - ['general']
+  end
+
   def self.get_client
-    unless @client
-      config = YAML.load_file(TweetsRails::Application::config.twitter_config_file)
+    @client ||= {}
+
+    if @client[subdomain].nil?
+      all_config = YAML.load_file(TweetsRails::Application::config.twitter_config_file)
+      config = all_config[subdomain]
   
-      @client = TwitterOAuth::Client.new(
-        :proxy => config['api']['url'] || 'http://api.twitter.com',
-        :consumer_key => config['oauth']['consumer_key'],
-        :consumer_secret => config['oauth']['consumer_secret'],
+      #TODO config can be empty
+
+      @client[subdomain] = TwitterOAuth::Client.new(
+        :proxy => all_config['general']['api']['url'] || 'http://api.twitter.com',
+        :consumer_key => all_config['general']['oauth']['consumer_key'],
+        :consumer_secret => all_config['general']['oauth']['consumer_secret'],
         :token => config['oauth']['request_token'],
         :secret => config['oauth']['request_secret']
       )
     end
     
-    @client
+    @client[subdomain]
   end
   
   def self.save_tweet(type, t)
@@ -36,9 +53,11 @@ class Tweet < ActiveRecord::Base
       :user_name => t['user']['name'],
       :user_screen_name => t['user']['screen_name'],
       :text => t['text'],
-      :raw => t.to_json
+      :raw => t.to_json,
+      :subdomain => subdomain
     )
 
+=begin    
     # post new tweets to available china tweet clients
     if (type == 'tweet')
       ChinaTweet.get_all_clients.each do |client|
@@ -48,6 +67,7 @@ class Tweet < ActiveRecord::Base
         end
       end
     end
+=end
   end
   
   def self.loop_through_tweets(type)
@@ -67,7 +87,7 @@ class Tweet < ActiveRecord::Base
       break if tweets.empty?
 
       tweets.each do |t|
-        if Tweet.where(:type => type, :external_id => t['id']).empty?
+        if Tweet.where(:type => type, :external_id => t['id'], :subdomain => subdomain).empty?
           self.save_tweet type, t
           puts "##{t['id']} saved!"
           stop = false
@@ -139,11 +159,11 @@ class Tweet < ActiveRecord::Base
   end
 
   def self.get_tweets
-    where(:type => @type).order('posted_at ASC')   
+    where(:type => @type, :subdomain => subdomain).order('posted_at ASC')   
   end
   
   def self.get_count(type = nil)
-    where(:type => type || @type).count
+    where(:type => type || @type, :subdomain => subdomain).count
   end
 
   def self.per_page

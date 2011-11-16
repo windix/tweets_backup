@@ -16,15 +16,16 @@ class TweetTasks < Thor
 	end
 	
 	desc "setup", "twitter oauth"
-	def setup
+	def setup(subdomain = 'windix')
 	  copy_config_file
 	
-	  config = YAML.load_file(TweetsRails::Application.config.twitter_config_file) rescue nil || {}
+    all_config = YAML.load_file(TweetsRails::Application.config.twitter_config_file) rescue nil || {}
+	  config = all_config[subdomain]
 		
-	  if config['oauth']['request_token'].nil? or config['oauth']['request_secret'].nil?
+	  if config.nil? or config['oauth'].nil? or config['oauth']['request_token'].nil? or config['oauth']['request_secret'].nil?
 	    client = TwitterOAuth::Client.new(
-	      :consumer_key => config['oauth']['consumer_key'],
-	      :consumer_secret => config['oauth']['consumer_secret']
+	      :consumer_key => all_config['general']['oauth']['consumer_key'],
+	      :consumer_secret => all_config['general']['oauth']['consumer_secret']
 	    )
 
 	    request_token = client.request_token
@@ -42,48 +43,93 @@ class TweetTasks < Thor
 	    )
 
 	    File.open(TweetsRails::Application.config.twitter_config_file, 'w') do |out|
-	      config['oauth']['request_token'] = access_token.token
-	      config['oauth']['request_secret'] = access_token.secret
-	      YAML::dump(config, out)
+        all_config[subdomain] = {
+          'oauth' => {
+            'request_token' => access_token.token,
+            'request_secret' => access_token.secret
+          }
+        }
+	      
+        YAML::dump(all_config, out)
 	    end
 	  else
-	  	puts "Skipping twitter oath setup because it exists"
+	  	puts "Skipping twitter oath setup for #{subdomain} because it exists"
 	  end
 	end
 	
 	desc 'backup_timeline', 'backup my tweets'
 	def backup_timeline
-	  Tweet.backup_timeline
+	  Tweet.get_all_subdomains.each do |subdomain|
+      puts "backup timeline for #{subdomain}..."
+      Tweet.subdomain = subdomain
+      Tweet.backup_timeline
+
+      puts
+    end
   end
   
   desc 'backup_favorite', 'backup my favorites'
   def backup_favorite
-    Tweet.backup_favorite
+	  Tweet.get_all_subdomains.each do |subdomain|
+      puts "backup favorite for #{subdomain}..."
+      Tweet.subdomain = subdomain
+      Tweet.backup_favorite
+
+      puts
+    end
   end
    
   desc 'backup_mention', 'backup my mentions'
   def backup_mention
-    Tweet.backup_mention
+	  Tweet.get_all_subdomains.each do |subdomain|
+      puts "backup mention for #{subdomain}..."
+      Tweet.subdomain = subdomain
+      Tweet.backup_mention
+      
+      puts
+    end
   end
 
   desc 'backup', 'backup all'
   def backup
-    backup_timeline
-    backup_mention
-    backup_favorite
+	  Tweet.get_all_subdomains.each do |subdomain|
+      puts "backup for #{subdomain}..."
+      Tweet.subdomain = subdomain
+
+      puts "timeline..."
+      Tweet.backup_timeline
+      puts "favorite..."
+      Tweet.backup_favorite
+      puts "mention..."
+      Tweet.backup_mention
+      
+      puts
+    end
   end
   
   desc 'stats', 'show statistics'
-  def stats
-    ['tweet', 'favorite'].each do |type|
-      first = Tweet.where(:type => type).order('posted_at ASC').first
-      last = Tweet.where(:type => type).order('posted_at ASC').last
-      count = Tweet.where(:type => type).order('posted_at ASC').count
-      puts <<EOF
+  def stats(subdomain = nil)
+    all_subdomains = subdomain.nil? ? Tweet.get_all_subdomains : subdomain.to_a
+
+    all_subdomains.each do |subdomain|
+      puts "#{subdomain}:"
+
+      ['tweet', 'mention', 'favorite'].each do |type|
+        all_tweets = Tweet.where(:type => type, :subdomain => subdomain)
+
+        first = all_tweets.order('posted_at ASC').first
+        last = all_tweets.order('posted_at ASC').last
+        count = all_tweets.order('posted_at ASC').count
+        
+        if count > 0
+          puts <<EOF
 Total number of #{type}s: #{count}
 Between #{first.posted_at} and #{last.posted_at}
 EOF
+        end
+      end
     end
+    puts
   end
   
   desc 'migrate_timezone', 'migrate timezone for existing records (one-off task)'

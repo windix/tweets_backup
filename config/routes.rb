@@ -3,7 +3,7 @@ TweetsRails::Application.routes.draw do
   get "tweets/favorites"
   get "tweets/mentions"
 
-  match "/tweets", :to => "tweets#tweets" 
+  match "/tweets", :to => "tweets#tweets", :constraints => { :subdomain => /.+/ }
 
   match 'syncs/:type/new' => 'syncs#new', :as => :syncs_new
   match 'syncs/:type/callback' => 'syncs#callback', :as => :syncs_callback
