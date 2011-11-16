@@ -1,5 +1,5 @@
 class TweetTasks < Thor
-  require './config/environment'
+  require File.expand_path('../../', File::dirname(__FILE__)) + '/config/environment'
 
 	desc "copy_config_file", "copy config file"
 	def copy_config_file
