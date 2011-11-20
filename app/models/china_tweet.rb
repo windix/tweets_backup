@@ -1,16 +1,24 @@
 class ChinaTweet
   
-  attr_accessor :client
+  attr_accessor :client, :subdomain, :authorized
 
-  def initialize(client_name)
+  def initialize(client_name, subdomain)
     @client_name = client_name
+    @subdomain = subdomain
     
     if (File.exists?(config_file_name))
-      if oauth_config['access_token'] && oauth_config['access_secret']
-        @client = get_client.load(:access_token => oauth_config['access_token'], 
-                                  :access_token_secret => oauth_config['access_secret'])
+      @subdomain_config = oauth_config(@subdomain)
+
+      # overwrite oauth_china default settings
+      get_client.customized_config = oauth_config('general')['oauth']
+
+      if !@subdomain_config.nil? && @subdomain_config['access_token'] && @subdomain_config['access_secret']
+        @client = get_client.load(:access_token => @subdomain_config['access_token'], 
+                                  :access_token_secret => @subdomain_config['access_secret'])
+        @authorized = true
       else
         @client = get_client.new
+        @authorized = false
       end
     else
       # need to init config file
@@ -40,11 +48,13 @@ class ChinaTweet
     end
   end
  
-  def self.get_all_clients
-    Dir.glob("#{Rails.root}/config/oauth/*.yml").collect do |config_filename|
+  def self.get_all_clients(subdomain)
+    Dir.glob(Rails.configuration.china_tweet_config_file % '*').collect do |config_filename|
       client_name = config_filename.scan(/(\w+).yml/).to_s
-      client_config = YAML.load_file(config_filename)[Rails.env]
-      authorized = !client_config['access_token'].nil? && !client_config['access_secret'].nil?
+
+      client_config = YAML.load_file(config_filename)[subdomain]
+      authorized = !client_config.nil? && !client_config['access_token'].nil? && !client_config['access_secret'].nil?
+      
       { :name => client_name, :authorized => authorized }
     end
   end
@@ -52,7 +62,7 @@ class ChinaTweet
   private
   
   def config_file_name
-    "#{Rails.root}/config/oauth/#{@client_name}.yml"
+    Rails.configuration.china_tweet_config_file % @client_name
   end
   
   def get_client
@@ -65,20 +75,30 @@ class ChinaTweet
     end
   end
   
-  def full_oauth_config
+  def all_oauth_config
     @config ||= YAML.load_file(config_file_name)
   end
   
-  def oauth_config
-    full_oauth_config[Rails.env]
+  def oauth_config(section)
+    result = all_oauth_config[section]
+    
+    if (section == 'general')
+      # TODO: generate using route
+      result['oauth']['url'] = Rails.configuration.root_url % @subdomain
+      result['oauth']['callback'] = "#{Rails.configuration.root_url}/syncs/%s/callback" % [@subdomain, @client_name]
+    end
+
+    result
   end
   
   def save_oauth_config(results)
+    @config[@subdomain] = {
+      'access_token' => results[:access_token],
+      'access_secret' => results[:access_token_secret]
+    }
+    
     File.open(config_file_name, 'w') do |out|
-      oauth_config['access_token'] = results[:access_token]
-      oauth_config['access_secret'] = results[:access_token_secret]
       YAML::dump(@config, out)
     end
   end
-  
 end

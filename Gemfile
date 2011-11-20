@@ -42,4 +42,5 @@ group :development do
 end
 
 gem 'oauth'
-gem 'oauth_china'
+gem 'oauth_china', :git => 'git://github.com/windix/oauth_china.git'
+

@@ -1,10 +1,7 @@
-development: 
-  key: 2557694334 
-  secret: 82729bdb12d8051091b7bdd895d6ada9
-  url: http://localhost:3000
-  callback: http://localhost:3000/syncs/sina/callback
-production: 
-  key: 2557694334 
-  secret: 82729bdb12d8051091b7bdd895d6ada9
-  url: http://localhost:3000
-  callback: http://localhost:3000/syncs/sina/callback
+--- 
+general:
+  oauth: 
+    key: 2557694334 
+    secret: 82729bdb12d8051091b7bdd895d6ada9
+    url: http://localhost:3000
+    callback: http://localhost:3000/syncs/sina/callback

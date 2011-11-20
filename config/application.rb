@@ -39,8 +39,16 @@ module TweetsRails
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    ## Those config can be access via:
+    ## - TweetsRails::Application::config
+    ## - Rails.configuration
+
     # Twitter config file 
     # TODO: use Dir.join? 
     config.twitter_config_file = "#{Rails.root}/config/twitter.yml"
+    config.china_tweet_config_file = "#{Rails.root}/config/oauth/%s.yml"
+    
+    #config.root_url = "http://%s.windix.org"
+    config.root_url = "http://%s.lvh.me:3000"
   end
 end

@@ -13,19 +13,23 @@ class Tweet < ActiveRecord::Base
     @subdomain || 'windix'
   end
 
+  def self.t
+    Rails.config.twitter_config.file
+  end
+
   def self.subdomain=(subdomain)
     @subdomain = subdomain
   end
 
   def self.get_all_subdomains
-    YAML.load_file(TweetsRails::Application::config.twitter_config_file).keys - ['general']
+    YAML.load_file(Rails.configuration.twitter_config_file).keys - ['general']
   end
 
   def self.get_client
     @client ||= {}
 
     if @client[subdomain].nil?
-      all_config = YAML.load_file(TweetsRails::Application::config.twitter_config_file)
+      all_config = YAML.load_file(Rails.configuration.twitter_config_file)
       config = all_config[subdomain]
   
       #TODO config can be empty
@@ -57,17 +61,15 @@ class Tweet < ActiveRecord::Base
       :subdomain => subdomain
     )
 
-=begin    
     # post new tweets to available china tweet clients
     if (type == 'tweet')
-      ChinaTweet.get_all_clients.each do |client|
+      ChinaTweet.get_all_clients(@subdomain).each do |client|
         if client[:authorized]
-          tweet_client = ChinaTweet.new(client[:name])
+          tweet_client = ChinaTweet.new(client[:name], @subdomain)
           tweet_client.new_tweet(t['text'])
         end
       end
     end
-=end
   end
   
   def self.loop_through_tweets(type)
