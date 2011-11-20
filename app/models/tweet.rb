@@ -13,10 +13,6 @@ class Tweet < ActiveRecord::Base
     @subdomain || 'windix'
   end
 
-  def self.t
-    Rails.config.twitter_config.file
-  end
-
   def self.subdomain=(subdomain)
     @subdomain = subdomain
   end
